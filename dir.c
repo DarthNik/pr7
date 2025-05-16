@@ -61,14 +61,7 @@ int main(int argc, char *argv[]){
     }
 
     else if (argc == 2){
-	char *home;
-	home = getenv("HOME");
-	if(!home){
-	    perror("Директория по умолчанию и переменная HOME не заданы");
-	    exit(1);
-	}
-
-	dir = home;
+	dir = ".";
 	word = argv[1];
     }
 
