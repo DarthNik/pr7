@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ctype.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <string.h>
@@ -18,13 +19,12 @@ void searchfile(const char* name){
     char buf[1024];
     int count = 0;
     while ((fgets(buf, sizeof(buf), fd)) != NULL){
-	if (strstr(buf, word)){
-	    count++;
-	    printf("%s %d строка: %s", name, count, buf);
+	count++;
+	char *sub = strstr(buf, word);
+	if (sub != NULL && buf[sub-buf+strlen(word)] == ' '){
+	    if (sub - buf == 0 || ispunct(buf[sub-buf-1]) > 0 || isspace(buf[sub-buf-1]) > 0)
+		printf("%s %d строка: %s", name, count, buf);
 	}
-
-	else
-	    count++;
     }
     
     fclose(fd);
