@@ -21,9 +21,9 @@ void searchfile(const char* name){
     while ((fgets(buf, sizeof(buf), fd)) != NULL){
 	count++;
 	char *sub = strstr(buf, word);
-	if (sub != NULL && buf[sub-buf+strlen(word)] == ' '){
-	    if (sub - buf == 0 || ispunct(buf[sub-buf-1]) > 0 || isspace(buf[sub-buf-1]) > 0)
-		printf("%s %d строка: %s", name, count, buf);
+	if (sub != NULL && isspace(buf[sub-buf+strlen(word)]) > 0){
+	    if (sub - buf == 0 || isalpha(buf[sub-buf-1]) == 0)
+		printf("%s:%d: %s", name, count, buf);
 	}
     }
     
@@ -61,7 +61,8 @@ int main(int argc, char *argv[]){
     }
 
     else if (argc == 2){
-	dir = ".";
+	char path[1024];
+	dir = getcwd(path, 1024);
 	word = argv[1];
     }
 
