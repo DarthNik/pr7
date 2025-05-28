@@ -21,7 +21,7 @@ void searchfile(const char* name){
     while ((fgets(buf, sizeof(buf), fd)) != NULL){
 	count++;
 	char *sub = strstr(buf, word);
-	if (sub != NULL && isspace(buf[sub-buf+strlen(word)]) > 0){
+	if (sub != NULL && isalpha(buf[sub-buf+strlen(word)]) == 0){
 	    if (sub - buf == 0 || isalpha(buf[sub-buf-1]) == 0)
 		printf("%s:%d: %s", name, count, buf);
 	}
